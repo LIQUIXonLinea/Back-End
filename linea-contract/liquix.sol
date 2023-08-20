@@ -136,40 +136,27 @@ contract LiquixMarketMaker {
     // Fetch the current market price and other parameters
     uint256 s = getCurrentMarketPrice();
     uint256 q = getQuantityBaseAsset(); // Define the function to get quantity base asset
-    uint256 σ = getVolatility(); // Define the function to get volatility
     uint256 T = getClosingTime(); // Define the function to get closing time
     uint256 t = getCurrentTime(); // Define the function to get current time
-    uint256 δa = getBidAskSpread(); // Define the function to get bid-ask spread
-    uint256 γ = getInventoryRiskParameter(); // Define the function to get inventory risk parameter
-    uint256 κ = getOrderBookLiquidityParameter(); // Define the function to get order book liquidity parameter
     
     // Calculate the ideal reserve price using Avellaneda & Stoikov's formula
-    uint256 reservePrice = s * exp((q / T) * ((σ ** 2) / 2) - γ * σ * sqrt(T - t));
+
     
     // Calculate the adjusted spread using Avellaneda & Stoikov's formula
-    uint256 adjustedSpread = δa + (σ * sqrt(T - t)) / (2 * κ) + (1 / κ) * log(1 + (κ * q) / (γ * σ * sqrt(T - t)));
+
     
     // Update the spread and reserve price in the AMM
-    updateSpread(adjustedSpread); // Define the function to update the spread
-    updateReservePrice(reservePrice); // Define the function to update the reserve price
+
 }
 
     
     function adjustDensityAndSpread() external {
     // Fetch the current market price and other parameters
-    uint256 δa = getBidAskSpread(); // Define the function to get bid-ask spread
-    uint256 σ = getVolatility(); // Define the function to get volatility
-    uint256 T = getClosingTime(); // Define the function to get closing time
-    uint256 t = getCurrentTime(); // Define the function to get current time
-    uint256 κ = getOrderBookLiquidityParameter(); // Define the function to get order book liquidity parameter
     
     // Calculate the density-based spread adjustment using the formula
-    uint256 densityAdjustment = σ * sqrt(T - t) / (2 * κ);
     
     // Calculate the adjusted bid-ask spread
-    uint256 adjustedSpread = δa + densityAdjustment;
     
     // Update the spread in the AMM
-    updateSpread(adjustedSpread); // Define the function to update the spread
+    }
 }
-
